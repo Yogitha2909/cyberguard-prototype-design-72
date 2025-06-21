@@ -9,12 +9,12 @@ import AdwareScanner from '../components/AdwareScanner';
 import DataBreachMonitor from '../components/DataBreachMonitor';
 
 const modules = [
-  { id: 'security', title: 'Security Advisor', icon: Shield, color: 'from-blue-500 to-blue-600', bgColor: 'bg-blue-100' },
-  { id: 'hidden', title: 'Hidden Applications', icon: Eye, color: 'from-purple-500 to-purple-600', bgColor: 'bg-purple-100' },
-  { id: 'threat', title: 'Threat Analyzer', icon: Search, color: 'from-red-500 to-red-600', bgColor: 'bg-red-100' },
-  { id: 'stats', title: 'App Statistics', icon: BarChart3, color: 'from-green-500 to-green-600', bgColor: 'bg-green-100' },
-  { id: 'adware', title: 'Adware Scan', icon: Scan, color: 'from-orange-500 to-orange-600', bgColor: 'bg-orange-100' },
-  { id: 'breach', title: 'Data Breach Monitor', icon: Bell, color: 'from-cyan-500 to-cyan-600', bgColor: 'bg-cyan-100' },
+  { id: 'security', title: 'Security Advisor', icon: Shield, color: 'from-blue-300 to-blue-400', bgColor: 'bg-blue-100' },
+  { id: 'hidden', title: 'Hidden Applications', icon: Eye, color: 'from-purple-300 to-purple-400', bgColor: 'bg-purple-100' },
+  { id: 'threat', title: 'Threat Analyzer', icon: Search, color: 'from-rose-300 to-rose-400', bgColor: 'bg-rose-100' },
+  { id: 'stats', title: 'App Statistics', icon: BarChart3, color: 'from-emerald-300 to-emerald-400', bgColor: 'bg-emerald-100' },
+  { id: 'adware', title: 'Adware Scan', icon: Scan, color: 'from-orange-300 to-orange-400', bgColor: 'bg-orange-100' },
+  { id: 'breach', title: 'Data Breach Monitor', icon: Bell, color: 'from-cyan-300 to-cyan-400', bgColor: 'bg-cyan-100' },
 ];
 
 const Index = () => {
@@ -44,35 +44,35 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 relative overflow-hidden">
       {/* Decorative Elements */}
-      <div className="absolute top-10 left-10 w-20 h-20 bg-yellow-400 rounded-full opacity-20"></div>
-      <div className="absolute top-32 right-16 w-16 h-16 bg-cyan-400 rounded-full opacity-30"></div>
-      <div className="absolute bottom-20 left-20 w-12 h-12 bg-pink-400 rounded-full opacity-25"></div>
-      <div className="absolute top-1/2 right-10 w-8 h-8 bg-green-400 rounded-full opacity-20"></div>
+      <div className="absolute top-10 left-10 w-20 h-20 bg-yellow-200 rounded-full opacity-40"></div>
+      <div className="absolute top-32 right-16 w-16 h-16 bg-cyan-200 rounded-full opacity-50"></div>
+      <div className="absolute bottom-20 left-20 w-12 h-12 bg-pink-200 rounded-full opacity-45"></div>
+      <div className="absolute top-1/2 right-10 w-8 h-8 bg-emerald-200 rounded-full opacity-40"></div>
       
       {/* Zigzag Pattern */}
-      <div className="absolute top-16 right-32 text-yellow-400 opacity-30 text-2xl">⚡⚡⚡</div>
-      <div className="absolute bottom-32 left-32 text-cyan-400 opacity-30 text-xl">◊◊◊</div>
+      <div className="absolute top-16 right-32 text-yellow-300 opacity-50 text-2xl">⚡⚡⚡</div>
+      <div className="absolute bottom-32 left-32 text-cyan-300 opacity-50 text-xl">◊◊◊</div>
 
       {/* Header */}
       <header className="relative z-10 px-6 py-6">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg">
-              <Shield className="w-7 h-7 text-white" />
+            <div className="w-12 h-12 bg-gradient-to-br from-cyan-200 to-blue-300 rounded-2xl flex items-center justify-center shadow-lg">
+              <Shield className="w-7 h-7 text-blue-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">CyberGuard</h1>
-              <p className="text-cyan-200 text-sm">Security First</p>
+              <h1 className="text-2xl font-bold text-slate-700">CyberGuard</h1>
+              <p className="text-slate-500 text-sm">Security First</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-3">
-            <button className="p-3 bg-white/10 backdrop-blur-sm rounded-2xl text-white hover:bg-white/20 transition-all">
+            <button className="p-3 bg-white/50 backdrop-blur-sm rounded-2xl text-slate-600 hover:bg-white/70 transition-all">
               <Bell className="w-5 h-5" />
             </button>
-            <button className="p-3 bg-white/10 backdrop-blur-sm rounded-2xl text-white hover:bg-white/20 transition-all">
+            <button className="p-3 bg-white/50 backdrop-blur-sm rounded-2xl text-slate-600 hover:bg-white/70 transition-all">
               <User className="w-5 h-5" />
             </button>
           </div>
@@ -84,33 +84,33 @@ const Index = () => {
         <div className="text-center mb-12">
           <div className="relative mb-8">
             {/* Main illustration area */}
-            <div className="bg-gradient-to-br from-cyan-400/20 to-blue-500/20 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
+            <div className="bg-gradient-to-br from-cyan-100/60 to-blue-100/60 backdrop-blur-sm rounded-3xl p-8 border border-white/30">
               <div className="relative">
-                <div className="w-32 h-32 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl">
-                  <Shield className="w-16 h-16 text-white" />
+                <div className="w-32 h-32 bg-gradient-to-br from-cyan-200 to-blue-300 rounded-full mx-auto mb-6 flex items-center justify-center shadow-xl">
+                  <Shield className="w-16 h-16 text-blue-600" />
                 </div>
                 
                 {/* Floating security icons */}
-                <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-green-400 to-green-500 rounded-xl flex items-center justify-center shadow-lg animate-bounce">
-                  <Lock className="w-6 h-6 text-white" />
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-emerald-200 to-emerald-300 rounded-xl flex items-center justify-center shadow-lg animate-bounce">
+                  <Lock className="w-6 h-6 text-emerald-600" />
                 </div>
-                <div className="absolute -top-2 -right-6 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg animate-pulse">
-                  <Eye className="w-5 h-5 text-white" />
+                <div className="absolute -top-2 -right-6 w-10 h-10 bg-gradient-to-br from-yellow-200 to-orange-300 rounded-xl flex items-center justify-center shadow-lg animate-pulse">
+                  <Eye className="w-5 h-5 text-orange-600" />
                 </div>
-                <div className="absolute -bottom-2 right-2 w-14 h-14 bg-gradient-to-br from-pink-400 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <Search className="w-7 h-7 text-white" />
+                <div className="absolute -bottom-2 right-2 w-14 h-14 bg-gradient-to-br from-pink-200 to-purple-300 rounded-xl flex items-center justify-center shadow-lg">
+                  <Search className="w-7 h-7 text-purple-600" />
                 </div>
               </div>
             </div>
           </div>
           
-          <h2 className="text-3xl font-bold text-white mb-3">
+          <h2 className="text-3xl font-bold text-slate-700 mb-3">
             Cyber Security
           </h2>
-          <h3 className="text-2xl font-semibold text-cyan-300 mb-4">
+          <h3 className="text-2xl font-semibold text-slate-500 mb-4">
             In The First Place
           </h3>
-          <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
             Securing Your Digital World, One Byte at a Time
           </p>
         </div>
@@ -123,32 +123,32 @@ const Index = () => {
               <button
                 key={module.id}
                 onClick={() => setActiveModule(module.id)}
-                className="group bg-white/10 backdrop-blur-sm rounded-3xl p-6 border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-white/20 shadow-xl"
+                className="group bg-white/40 backdrop-blur-sm rounded-3xl p-6 border border-white/50 transition-all duration-300 hover:scale-105 hover:bg-white/60 shadow-lg"
               >
                 <div className={`w-16 h-16 bg-gradient-to-br ${module.color} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
                   <IconComponent className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-semibold text-white text-sm leading-tight mb-2">
+                <h3 className="font-semibold text-slate-700 text-sm leading-tight mb-2">
                   {module.title}
                 </h3>
-                <div className="w-8 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full mx-auto"></div>
+                <div className="w-8 h-1 bg-gradient-to-r from-slate-300 to-slate-400 rounded-full mx-auto"></div>
               </button>
             );
           })}
         </div>
 
         {/* Status Card */}
-        <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 backdrop-blur-sm border border-green-400/30 rounded-2xl p-6 flex items-center space-x-4 shadow-xl">
-          <div className="w-4 h-4 bg-green-400 rounded-full animate-pulse shadow-lg"></div>
+        <div className="bg-gradient-to-r from-emerald-200/60 to-emerald-300/60 backdrop-blur-sm border border-emerald-300/50 rounded-2xl p-6 flex items-center space-x-4 shadow-lg">
+          <div className="w-4 h-4 bg-emerald-400 rounded-full animate-pulse shadow-lg"></div>
           <div>
-            <span className="text-green-300 font-semibold text-lg">Real-time Protection Enabled</span>
-            <p className="text-green-200 text-sm">Your device is actively protected</p>
+            <span className="text-emerald-700 font-semibold text-lg">Real-time Protection Enabled</span>
+            <p className="text-emerald-600 text-sm">Your device is actively protected</p>
           </div>
         </div>
 
         {/* Quick Action Button */}
         <div className="mt-8">
-          <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-4 px-8 rounded-2xl font-bold text-lg transition-all transform hover:scale-105 shadow-2xl">
+          <button className="w-full bg-gradient-to-r from-slate-300 to-slate-400 hover:from-slate-400 hover:to-slate-500 text-slate-700 py-4 px-8 rounded-2xl font-bold text-lg transition-all transform hover:scale-105 shadow-xl">
             Start Security Scan
           </button>
         </div>
