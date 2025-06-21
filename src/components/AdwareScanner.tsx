@@ -1,4 +1,3 @@
-
 import { ArrowLeft, AlertTriangle, Settings } from 'lucide-react';
 
 const adwareApps = [
@@ -9,7 +8,7 @@ const adwareApps = [
   { name: 'Music Player', icon: '🎵', adServices: 'AdColony', risk: 'Low' },
 ];
 
-const Adware Scanner = ({ onBack }: { onBack: () => void }) => {
+const AdwareScanner = ({ onBack }: { onBack: () => void }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
