@@ -1,13 +1,17 @@
 
 import { ArrowLeft, BarChart3, Clock, Wifi, RefreshCw, Search, User, TrendingUp } from 'lucide-react';
+import { useState } from 'react';
+import AppScanModal from './AppScanModal';
 
 const AppStatistics = ({ onBack }: { onBack: () => void }) => {
+  const [isScanModalOpen, setIsScanModalOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-blue-50 to-violet-50 relative overflow-hidden">
       {/* Decorative Elements */}
-      <div className="absolute top-16 right-20 w-20 h-20 bg-orange-200 rounded-full opacity-40"></div>
-      <div className="absolute bottom-32 left-16 w-14 h-14 bg-cyan-200 rounded-full opacity-45"></div>
-      <div className="absolute top-1/3 left-10 text-yellow-300 opacity-50 text-xl">📊</div>
+      <div className="absolute top-16 right-20 w-20 h-20 bg-peach-200 rounded-full opacity-40"></div>
+      <div className="absolute bottom-32 left-16 w-14 h-14 bg-mint-200 rounded-full opacity-45"></div>
+      <div className="absolute top-1/3 left-10 text-lavender-300 opacity-50 text-xl">📊</div>
 
       {/* Header */}
       <header className="relative z-10 bg-white/30 backdrop-blur-sm border-b border-white/40">
@@ -16,7 +20,7 @@ const AppStatistics = ({ onBack }: { onBack: () => void }) => {
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-200 to-blue-300 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-mint-200 to-blue-200 rounded-xl flex items-center justify-center">
               <BarChart3 className="w-5 h-5 text-blue-600" />
             </div>
             <h1 className="text-xl font-bold text-slate-700">App Statistics</h1>
@@ -27,7 +31,7 @@ const AppStatistics = ({ onBack }: { onBack: () => void }) => {
       <main className="relative z-10 max-w-4xl mx-auto px-6 py-8">
         {/* Hero Section */}
         <div className="text-center mb-8">
-          <div className="w-24 h-24 bg-gradient-to-br from-emerald-200 to-blue-300 rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-xl">
+          <div className="w-24 h-24 bg-gradient-to-br from-mint-200 to-blue-200 rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-xl">
             <User className="w-12 h-12 text-blue-600" />
           </div>
           <h2 className="text-2xl font-bold text-slate-700 mb-2">CyberSecurity</h2>
@@ -36,7 +40,10 @@ const AppStatistics = ({ onBack }: { onBack: () => void }) => {
 
         {/* Scan Button */}
         <div className="bg-white/40 backdrop-blur-sm rounded-3xl border border-white/50 p-8 mb-8 text-center shadow-xl">
-          <button className="w-full bg-gradient-to-r from-orange-200 to-pink-300 hover:from-orange-300 hover:to-pink-400 text-slate-700 py-6 px-8 rounded-3xl font-bold text-xl transition-all transform hover:scale-105 shadow-lg">
+          <button 
+            onClick={() => setIsScanModalOpen(true)}
+            className="w-full bg-gradient-to-r from-peach-200 to-rose-200 hover:from-peach-300 hover:to-rose-300 text-slate-700 py-6 px-8 rounded-3xl font-bold text-xl transition-all transform hover:scale-105 shadow-lg"
+          >
             Scan Now
           </button>
         </div>
@@ -44,10 +51,10 @@ const AppStatistics = ({ onBack }: { onBack: () => void }) => {
         {/* Statistics Options */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {[
-            { title: 'Active Time Stats', icon: Clock, color: 'from-purple-200 to-pink-300', description: 'Monitor app usage patterns' },
-            { title: 'Data Usage Stats', icon: Wifi, color: 'from-blue-200 to-cyan-300', description: 'Track network consumption' },
-            { title: 'App Update', icon: RefreshCw, color: 'from-emerald-200 to-emerald-300', description: 'Check for updates' },
-            { title: 'App Analysis', icon: Search, color: 'from-orange-200 to-rose-300', description: 'Detailed app insights' },
+            { title: 'Active Time Stats', icon: Clock, color: 'from-lavender-200 to-rose-200', description: 'Monitor app usage patterns' },
+            { title: 'Data Usage Stats', icon: Wifi, color: 'from-blue-200 to-mint-200', description: 'Track network consumption' },
+            { title: 'App Update', icon: RefreshCw, color: 'from-mint-200 to-sage-200', description: 'Check for updates' },
+            { title: 'App Analysis', icon: Search, color: 'from-peach-200 to-coral-200', description: 'Detailed app insights' },
           ].map((option, index) => {
             const IconComponent = option.icon;
             return (
@@ -82,10 +89,10 @@ const AppStatistics = ({ onBack }: { onBack: () => void }) => {
           
           <div className="space-y-6">
             {[
-              { name: 'Social Media', usage: 85, color: 'from-blue-200 to-cyan-300' },
-              { name: 'Productivity', usage: 65, color: 'from-emerald-200 to-emerald-300' },
-              { name: 'Entertainment', usage: 45, color: 'from-purple-200 to-pink-300' },
-              { name: 'Games', usage: 30, color: 'from-orange-200 to-rose-300' },
+              { name: 'Social Media', usage: 85, color: 'from-blue-200 to-mint-200' },
+              { name: 'Productivity', usage: 65, color: 'from-mint-200 to-sage-200' },
+              { name: 'Entertainment', usage: 45, color: 'from-lavender-200 to-rose-200' },
+              { name: 'Games', usage: 30, color: 'from-peach-200 to-coral-200' },
               { name: 'Utilities', usage: 20, color: 'from-slate-200 to-slate-300' },
             ].map((app, index) => (
               <div key={index} className="flex items-center space-x-4">
@@ -102,6 +109,11 @@ const AppStatistics = ({ onBack }: { onBack: () => void }) => {
           </div>
         </div>
       </main>
+
+      {/* Scan Modal */}
+      <AppScanModal 
+        isOpen={isScanModalOpen} 
+        onClose={() => setIsScanModalOpen(false)} />
     </div>
   );
 };

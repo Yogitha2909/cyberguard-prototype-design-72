@@ -12,6 +12,8 @@ interface AppContextType {
   setRealtimeProtection: (value: boolean) => void;
   language: string;
   setLanguage: (value: string) => void;
+  disabledApps: Record<string, boolean>;
+  toggleAppStatus: (appName: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -34,6 +36,14 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [scanProgress, setScanProgress] = useState(0);
   const [realtimeProtection, setRealtimeProtection] = useState(true);
   const [language, setLanguage] = useState('English');
+  const [disabledApps, setDisabledApps] = useState<Record<string, boolean>>({});
+
+  const toggleAppStatus = (appName: string) => {
+    setDisabledApps(prev => ({
+      ...prev,
+      [appName]: !prev[appName]
+    }));
+  };
 
   return (
     <AppContext.Provider value={{
@@ -46,7 +56,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       realtimeProtection,
       setRealtimeProtection,
       language,
-      setLanguage
+      setLanguage,
+      disabledApps,
+      toggleAppStatus
     }}>
       {children}
     </AppContext.Provider>
