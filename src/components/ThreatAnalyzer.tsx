@@ -1,10 +1,12 @@
 
-import { ArrowLeft, Shield, AlertTriangle, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Shield, AlertTriangle, CheckCircle, Moon, Sun } from 'lucide-react';
 import { useState } from 'react';
+import { useApp } from '@/contexts/AppContext';
 
 const ThreatAnalyzer = ({ onBack }: { onBack: () => void }) => {
   const [isScanning, setIsScanning] = useState(false);
   const [scanComplete, setScanComplete] = useState(false);
+  const { isDarkMode, setIsDarkMode } = useApp();
 
   const malignApps = 3;
   const benignApps = 47;
@@ -22,20 +24,30 @@ const ThreatAnalyzer = ({ onBack }: { onBack: () => void }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-slate-50 to-blue-50'}`}>
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center space-x-4">
-          <button onClick={onBack} className="p-2 text-slate-600 hover:text-blue-600 transition-colors">
-            <ArrowLeft className="w-5 h-5" />
+      <header className={`${isDarkMode ? 'bg-slate-800' : 'bg-white'} shadow-sm border-b ${isDarkMode ? 'border-slate-700' : 'border-slate-200'}`}>
+        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <button onClick={onBack} className={`p-2 ${isDarkMode ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-blue-600'} transition-colors`}>
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <h1 className={`text-xl font-bold ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>Threat Analyzer</h1>
+          </div>
+          
+          {/* Theme Toggle Button */}
+          <button 
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className={`p-3 ${isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-white/50 text-slate-600 hover:bg-white/70'} backdrop-blur-sm rounded-2xl transition-all duration-300`}
+          >
+            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
-          <h1 className="text-xl font-bold text-slate-800">Threat Analyzer</h1>
         </div>
       </header>
 
       <main className="max-w-4xl mx-auto px-6 py-8">
         {/* Threat Chart */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 mb-6">
+        <div className={`${isDarkMode ? 'bg-slate-800' : 'bg-white'} rounded-2xl shadow-sm border ${isDarkMode ? 'border-slate-700' : 'border-slate-200'} p-8 mb-6`}>
           <div className="text-center">
             <div className="relative w-48 h-48 mx-auto mb-6">
               {/* Outer Ring - Malign Apps */}
@@ -44,7 +56,7 @@ const ThreatAnalyzer = ({ onBack }: { onBack: () => void }) => {
                   cx="50"
                   cy="50"
                   r="40"
-                  stroke="#fee2e2"
+                  stroke={isDarkMode ? "#fee2e2" : "#fee2e2"}
                   strokeWidth="8"
                   fill="none"
                 />
@@ -63,7 +75,7 @@ const ThreatAnalyzer = ({ onBack }: { onBack: () => void }) => {
                   cx="50"
                   cy="50"
                   r="25"
-                  stroke="#dcfce7"
+                  stroke={isDarkMode ? "#dcfce7" : "#dcfce7"}
                   strokeWidth="8"
                   fill="none"
                 />
@@ -92,7 +104,7 @@ const ThreatAnalyzer = ({ onBack }: { onBack: () => void }) => {
               <div className="text-center">
                 <div className="flex items-center justify-center space-x-2 mb-2">
                   <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-slate-600">Potential Malign Apps</span>
+                  <span className={`text-sm font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>Potential Malign Apps</span>
                 </div>
                 <div className="text-3xl font-bold text-red-600">{malignApps}</div>
               </div>
@@ -100,7 +112,7 @@ const ThreatAnalyzer = ({ onBack }: { onBack: () => void }) => {
               <div className="text-center">
                 <div className="flex items-center justify-center space-x-2 mb-2">
                   <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-slate-600">Potential Benign Apps</span>
+                  <span className={`text-sm font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>Potential Benign Apps</span>
                 </div>
                 <div className="text-3xl font-bold text-green-600">{benignApps}</div>
               </div>
@@ -110,7 +122,7 @@ const ThreatAnalyzer = ({ onBack }: { onBack: () => void }) => {
             <button
               onClick={handleScan}
               disabled={isScanning}
-              className={`w-full py-4 px-6 rounded-xl font-semibold text-white transition-all ${
+              className={`w-full py-4 px-6 rounded-xl font-semibold text-white transition-all duration-300 ${
                 isScanning
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800'
@@ -122,16 +134,16 @@ const ThreatAnalyzer = ({ onBack }: { onBack: () => void }) => {
         </div>
 
         {/* Status Banner */}
-        <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center space-x-3">
+        <div className={`${isDarkMode ? 'bg-green-900/30' : 'bg-green-50'} border ${isDarkMode ? 'border-green-800' : 'border-green-200'} rounded-xl p-4 flex items-center space-x-3`}>
           <CheckCircle className="w-6 h-6 text-green-600" />
-          <span className="text-green-800 font-medium">Real-time protection enabled</span>
+          <span className={`${isDarkMode ? 'text-green-300' : 'text-green-800'} font-medium`}>Real-time protection enabled</span>
         </div>
 
         {/* Threats List */}
         {scanComplete && (
-          <div className="mt-6 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="p-4 border-b border-slate-200 bg-red-50">
-              <h3 className="font-semibold text-red-800 flex items-center space-x-2">
+          <div className={`mt-6 ${isDarkMode ? 'bg-slate-800' : 'bg-white'} rounded-2xl shadow-sm border ${isDarkMode ? 'border-slate-700' : 'border-slate-200'} overflow-hidden`}>
+            <div className={`p-4 border-b ${isDarkMode ? 'border-slate-700' : 'border-slate-200'} ${isDarkMode ? 'bg-red-900/30' : 'bg-red-50'}`}>
+              <h3 className={`font-semibold ${isDarkMode ? 'text-red-300' : 'text-red-800'} flex items-center space-x-2`}>
                 <AlertTriangle className="w-5 h-5" />
                 <span>Detected Threats</span>
               </h3>
@@ -142,11 +154,11 @@ const ThreatAnalyzer = ({ onBack }: { onBack: () => void }) => {
               { name: 'Ad Network Tracker', risk: 'Medium', description: 'Excessive data collection permissions' },
               { name: 'Background Service', risk: 'Low', description: 'Unusual background activity' },
             ].map((threat, index) => (
-              <div key={index} className="p-4 border-b border-slate-100 last:border-b-0">
+              <div key={index} className={`p-4 border-b ${isDarkMode ? 'border-slate-700' : 'border-slate-100'} last:border-b-0`}>
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-slate-800">{threat.name}</h4>
-                    <p className="text-sm text-slate-600">{threat.description}</p>
+                    <h4 className={`font-medium ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>{threat.name}</h4>
+                    <p className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>{threat.description}</p>
                   </div>
                   <div className={`px-3 py-1 rounded-full text-xs font-medium ${
                     threat.risk === 'High' ? 'bg-red-100 text-red-800' :

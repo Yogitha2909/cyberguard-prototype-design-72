@@ -1,6 +1,7 @@
 
-import { ArrowLeft, Eye, EyeOff, Ban } from 'lucide-react';
+import { ArrowLeft, Eye, EyeOff, Ban, Moon, Sun } from 'lucide-react';
 import { useState } from 'react';
+import { useApp } from '@/contexts/AppContext';
 
 const apps = [
   { name: 'Banking App', icon: '🏦', category: '3rd Party', hidden: false, banned: false },
@@ -13,6 +14,7 @@ const apps = [
 
 const HiddenApplications = ({ onBack }: { onBack: () => void }) => {
   const [activeTab, setActiveTab] = useState<'3rd Party' | 'Banned' | 'Hidden'>('3rd Party');
+  const { isDarkMode, setIsDarkMode } = useApp();
 
   const filteredApps = apps.filter(app => {
     if (activeTab === '3rd Party') return !app.banned && !app.hidden;
@@ -22,19 +24,29 @@ const HiddenApplications = ({ onBack }: { onBack: () => void }) => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-slate-50 to-blue-50'}`}>
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center space-x-4">
-          <button onClick={onBack} className="p-2 text-slate-600 hover:text-blue-600 transition-colors">
-            <ArrowLeft className="w-5 h-5" />
+      <header className={`${isDarkMode ? 'bg-slate-800' : 'bg-white'} shadow-sm border-b ${isDarkMode ? 'border-slate-700' : 'border-slate-200'}`}>
+        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <button onClick={onBack} className={`p-2 ${isDarkMode ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-blue-600'} transition-colors`}>
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <h1 className={`text-xl font-bold ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>Applications</h1>
+          </div>
+          
+          {/* Theme Toggle Button */}
+          <button 
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className={`p-3 ${isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-white/50 text-slate-600 hover:bg-white/70'} backdrop-blur-sm rounded-2xl transition-all duration-300`}
+          >
+            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
-          <h1 className="text-xl font-bold text-slate-800">Applications</h1>
         </div>
       </header>
 
       {/* Tabs */}
-      <div className="bg-white border-b border-slate-200">
+      <div className={`${isDarkMode ? 'bg-slate-800' : 'bg-white'} border-b ${isDarkMode ? 'border-slate-700' : 'border-slate-200'}`}>
         <div className="max-w-4xl mx-auto px-6">
           <div className="flex space-x-8">
             {['3rd Party', 'Banned', 'Hidden'].map((tab) => (
@@ -44,7 +56,7 @@ const HiddenApplications = ({ onBack }: { onBack: () => void }) => {
                 className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
                   activeTab === tab
                     ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-slate-500 hover:text-slate-700'
+                    : `border-transparent ${isDarkMode ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-700'}`
                 }`}
               >
                 {tab}
@@ -55,21 +67,21 @@ const HiddenApplications = ({ onBack }: { onBack: () => void }) => {
       </div>
 
       <main className="max-w-4xl mx-auto px-6 py-8">
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div className={`${isDarkMode ? 'bg-slate-800' : 'bg-white'} rounded-2xl shadow-sm border ${isDarkMode ? 'border-slate-700' : 'border-slate-200'} overflow-hidden`}>
           {filteredApps.length === 0 ? (
-            <div className="p-8 text-center text-slate-500">
+            <div className={`p-8 text-center ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
               No applications found in this category
             </div>
           ) : (
             filteredApps.map((app, index) => (
-              <div key={index} className="flex items-center justify-between p-4 border-b border-slate-100 last:border-b-0">
+              <div key={index} className={`flex items-center justify-between p-4 border-b ${isDarkMode ? 'border-slate-700' : 'border-slate-100'} last:border-b-0`}>
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-2xl">
+                  <div className={`w-12 h-12 ${isDarkMode ? 'bg-slate-700' : 'bg-slate-100'} rounded-xl flex items-center justify-center text-2xl`}>
                     {app.icon}
                   </div>
                   <div>
-                    <h3 className="font-medium text-slate-800">{app.name}</h3>
-                    <p className="text-sm text-slate-600">{app.category}</p>
+                    <h3 className={`font-medium ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>{app.name}</h3>
+                    <p className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>{app.category}</p>
                   </div>
                 </div>
                 
@@ -86,7 +98,7 @@ const HiddenApplications = ({ onBack }: { onBack: () => void }) => {
                       <span>Hidden</span>
                     </div>
                   )}
-                  <button className="p-2 text-slate-400 hover:text-slate-600 transition-colors">
+                  <button className={`p-2 ${isDarkMode ? 'text-slate-400 hover:text-slate-200' : 'text-slate-400 hover:text-slate-600'} transition-colors`}>
                     <Eye className="w-4 h-4" />
                   </button>
                 </div>
