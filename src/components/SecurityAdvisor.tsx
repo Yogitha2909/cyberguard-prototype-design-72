@@ -1,32 +1,43 @@
 
 import { ArrowLeft, Shield, Wifi, Lock, Bluetooth, Smartphone, Eye, Key, AlertTriangle, CheckCircle, XCircle, User, Moon, Sun } from 'lucide-react';
+import { useEffect } from 'react';
 import { useApp } from '@/contexts/AppContext';
+import DonutScanner from './DonutScanner';
 
 interface SecurityItem {
   title: string;
   icon: React.ElementType;
   status: 'safe' | 'warning' | 'danger';
-  enabled: boolean;
 }
 
 const securityItems: SecurityItem[] = [
-  { title: 'Root Status', icon: Shield, status: 'safe', enabled: false },
-  { title: 'Hotspot Status', icon: Wifi, status: 'safe', enabled: false },
-  { title: 'Google Play Protect', icon: Shield, status: 'safe', enabled: true },
-  { title: 'USB Debugging', icon: Smartphone, status: 'safe', enabled: false },
-  { title: 'Bluetooth Status', icon: Bluetooth, status: 'safe', enabled: true },
-  { title: 'Lock Screen Status', icon: Lock, status: 'safe', enabled: true },
-  { title: 'SEAndroid', icon: Shield, status: 'safe', enabled: true },
-  { title: 'Device Encryption', icon: Key, status: 'safe', enabled: true },
-  { title: 'NFC', icon: Wifi, status: 'safe', enabled: false },
-  { title: 'Developer Options', icon: Key, status: 'safe', enabled: false },
-  { title: 'Show Password', icon: Eye, status: 'warning', enabled: true },
-  { title: 'Lock Screen Notifications', icon: Eye, status: 'danger', enabled: true },
-  { title: 'Unknown Source Installation', icon: AlertTriangle, status: 'safe', enabled: false },
+  { title: 'Root Status', icon: Shield, status: 'safe' },
+  { title: 'Hotspot Status', icon: Wifi, status: 'safe' },
+  { title: 'Google Play Protect', icon: Shield, status: 'safe' },
+  { title: 'USB Debugging', icon: Smartphone, status: 'safe' },
+  { title: 'Bluetooth Status', icon: Bluetooth, status: 'safe' },
+  { title: 'Lock Screen Status', icon: Lock, status: 'safe' },
+  { title: 'SEAndroid', icon: Shield, status: 'safe' },
+  { title: 'Device Encryption', icon: Key, status: 'safe' },
+  { title: 'NFC', icon: Wifi, status: 'safe' },
+  { title: 'Developer Options', icon: Key, status: 'safe' },
+  { title: 'Show Password', icon: Eye, status: 'warning' },
+  { title: 'Lock Screen Notifications', icon: Eye, status: 'danger' },
+  { title: 'Unknown Source Installation', icon: AlertTriangle, status: 'safe' },
 ];
 
 const SecurityAdvisor = ({ onBack }: { onBack: () => void }) => {
-  const { isDarkMode, setIsDarkMode } = useApp();
+  const { isDarkMode, setIsDarkMode, pageScanStates, startPageScan, securitySettings, toggleSecuritySetting } = useApp();
+
+  const pageId = 'security-advisor';
+  const scanState = pageScanStates[pageId];
+
+  useEffect(() => {
+    // Auto-start scan when page loads
+    if (!scanState?.isComplete) {
+      startPageScan(pageId);
+    }
+  }, []);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -42,6 +53,36 @@ const SecurityAdvisor = ({ onBack }: { onBack: () => void }) => {
     if (status === 'warning') return <AlertTriangle className="w-5 h-5 text-yellow-400" />;
     return enabled ? <CheckCircle className="w-5 h-5 text-emerald-400" /> : <XCircle className="w-5 h-5 text-slate-400" />;
   };
+
+  // Show scanning animation if scanning or not complete
+  if (scanState?.isScanning || (!scanState?.isComplete && !scanState)) {
+    return (
+      <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100'} relative overflow-hidden`}>
+        {/* Header */}
+        <header className={`relative z-10 ${isDarkMode ? 'bg-slate-800/30' : 'bg-white/30'} backdrop-blur-sm border-b border-white/40`}>
+          <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <button onClick={onBack} className={`p-2 ${isDarkMode ? 'text-slate-300 hover:text-slate-100' : 'text-slate-600 hover:text-slate-800'} transition-colors`}>
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h1 className={`text-xl font-bold ${isDarkMode ? 'text-slate-200' : 'text-slate-700'}`}>Security Advisor</h1>
+            </div>
+            
+            <button 
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className={`p-3 ${isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-white/50 text-slate-600 hover:bg-white/70'} backdrop-blur-sm rounded-2xl transition-all duration-300`}
+            >
+              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+          </div>
+        </header>
+
+        <main className="relative z-10 max-w-4xl mx-auto px-6 py-8 flex items-center justify-center">
+          <DonutScanner pageId={pageId} size={250} />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100'} relative overflow-hidden`}>
@@ -64,7 +105,6 @@ const SecurityAdvisor = ({ onBack }: { onBack: () => void }) => {
             </div>
           </div>
           
-          {/* Theme Toggle Button */}
           <button 
             onClick={() => setIsDarkMode(!isDarkMode)}
             className={`p-3 ${isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-white/50 text-slate-600 hover:bg-white/70'} backdrop-blur-sm rounded-2xl transition-all duration-300`}
@@ -87,6 +127,7 @@ const SecurityAdvisor = ({ onBack }: { onBack: () => void }) => {
         <div className={`${isDarkMode ? 'bg-slate-800/40' : 'bg-white/40'} backdrop-blur-sm rounded-3xl border border-white/50 overflow-hidden shadow-xl`}>
           {securityItems.map((item, index) => {
             const IconComponent = item.icon;
+            const enabled = securitySettings[item.title] ?? false;
             return (
               <div key={index} className={`flex items-center justify-between p-6 border-b border-white/30 last:border-b-0 ${item.status === 'danger' ? (isDarkMode ? 'bg-rose-900/30' : 'bg-rose-200/30') : ''} hover:bg-white/20 transition-colors`}>
                 <div className="flex items-center space-x-4">
@@ -101,14 +142,17 @@ const SecurityAdvisor = ({ onBack }: { onBack: () => void }) => {
                 </div>
                 
                 <div className="flex items-center space-x-3">
-                  <span className={`text-sm font-medium px-3 py-1 rounded-full ${
-                    item.status === 'danger' ? (isDarkMode ? 'bg-rose-800/50 text-rose-300' : 'bg-rose-200/50 text-rose-700') :
-                    item.status === 'warning' ? (isDarkMode ? 'bg-yellow-800/50 text-yellow-300' : 'bg-yellow-200/50 text-yellow-700') :
-                    item.enabled ? (isDarkMode ? 'bg-emerald-800/50 text-emerald-300' : 'bg-emerald-200/50 text-emerald-700') : (isDarkMode ? 'bg-slate-700/50 text-slate-400' : 'bg-slate-200/50 text-slate-600')
-                  }`}>
-                    {item.enabled ? 'Enabled' : 'Disabled'}
-                  </span>
-                  {getStatusIcon(item.status, item.enabled)}
+                  <button
+                    onClick={() => toggleSecuritySetting(item.title)}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                      enabled 
+                        ? 'bg-red-600 hover:bg-red-700 text-white' 
+                        : 'bg-green-600 hover:bg-green-700 text-white'
+                    }`}
+                  >
+                    {enabled ? 'Disable' : 'Enable'}
+                  </button>
+                  {getStatusIcon(item.status, enabled)}
                 </div>
               </div>
             );
@@ -118,10 +162,12 @@ const SecurityAdvisor = ({ onBack }: { onBack: () => void }) => {
         {/* Summary Cards */}
         <div className="mt-8 grid grid-cols-3 gap-6">
           <div className={`${isDarkMode ? 'bg-gradient-to-br from-emerald-800/60 to-emerald-900/60' : 'bg-gradient-to-br from-emerald-200/60 to-emerald-300/60'} backdrop-blur-sm rounded-2xl p-6 text-center border border-emerald-300/50`}>
-            <div className={`text-3xl font-bold ${isDarkMode ? 'text-emerald-300' : 'text-emerald-700'} mb-2`}>8</div>
+            <div className={`text-3xl font-bold ${isDarkMode ? 'text-emerald-300' : 'text-emerald-700'} mb-2`}>
+              {Object.values(securitySettings).filter(Boolean).length}
+            </div>
             <div className={`text-sm ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>Secure Settings</div>
             <div className={`w-full h-2 ${isDarkMode ? 'bg-emerald-800/50' : 'bg-emerald-300/50'} rounded-full mt-3`}>
-              <div className={`w-4/5 h-2 ${isDarkMode ? 'bg-emerald-400' : 'bg-emerald-400'} rounded-full`}></div>
+              <div className={`h-2 ${isDarkMode ? 'bg-emerald-400' : 'bg-emerald-400'} rounded-full`} style={{ width: `${(Object.values(securitySettings).filter(Boolean).length / securityItems.length) * 100}%` }}></div>
             </div>
           </div>
           <div className={`${isDarkMode ? 'bg-gradient-to-br from-yellow-800/60 to-orange-900/60' : 'bg-gradient-to-br from-yellow-200/60 to-orange-300/60'} backdrop-blur-sm rounded-2xl p-6 text-center border border-yellow-300/50`}>

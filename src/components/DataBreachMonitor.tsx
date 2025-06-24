@@ -1,6 +1,8 @@
 
 import { ArrowLeft, Shield, AlertTriangle, CheckCircle, Clock, Moon, Sun } from 'lucide-react';
+import { useEffect } from 'react';
 import { useApp } from '@/contexts/AppContext';
+import DonutScanner from './DonutScanner';
 
 const breachData = [
   { service: 'Social Media Platform', date: '2024-01-15', severity: 'High', affected: '2.3M users', status: 'Active' },
@@ -9,7 +11,47 @@ const breachData = [
 ];
 
 const DataBreachMonitor = ({ onBack }: { onBack: () => void }) => {
-  const { isDarkMode, setIsDarkMode } = useApp();
+  const { isDarkMode, setIsDarkMode, pageScanStates, startPageScan } = useApp();
+
+  const pageId = 'data-breach-monitor';
+  const scanState = pageScanStates[pageId];
+
+  useEffect(() => {
+    // Auto-start scan when page loads
+    if (!scanState?.isComplete) {
+      startPageScan(pageId);
+    }
+  }, []);
+
+  // Show scanning animation if scanning or not complete
+  if (scanState?.isScanning || (!scanState?.isComplete && !scanState)) {
+    return (
+      <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-slate-50 to-blue-50'}`}>
+        {/* Header */}
+        <header className={`${isDarkMode ? 'bg-slate-800' : 'bg-white'} shadow-sm border-b ${isDarkMode ? 'border-slate-700' : 'border-slate-200'}`}>
+          <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <button onClick={onBack} className={`p-2 ${isDarkMode ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-blue-600'} transition-colors`}>
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h1 className={`text-xl font-bold ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>Data Breach Monitor</h1>
+            </div>
+            
+            <button 
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className={`p-3 ${isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-white/50 text-slate-600 hover:bg-white/70'} backdrop-blur-sm rounded-2xl transition-all duration-300`}
+            >
+              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+          </div>
+        </header>
+
+        <main className="max-w-4xl mx-auto px-6 py-8 flex items-center justify-center">
+          <DonutScanner pageId={pageId} size={250} />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-slate-50 to-blue-50'}`}>
@@ -23,7 +65,6 @@ const DataBreachMonitor = ({ onBack }: { onBack: () => void }) => {
             <h1 className={`text-xl font-bold ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>Data Breach Monitor</h1>
           </div>
           
-          {/* Theme Toggle Button */}
           <button 
             onClick={() => setIsDarkMode(!isDarkMode)}
             className={`p-3 ${isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-white/50 text-slate-600 hover:bg-white/70'} backdrop-blur-sm rounded-2xl transition-all duration-300`}

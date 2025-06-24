@@ -1,12 +1,53 @@
 
 import { ArrowLeft, BarChart3, Clock, Wifi, RefreshCw, Search, User, TrendingUp, Moon, Sun } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useApp } from '@/contexts/AppContext';
 import AppScanModal from './AppScanModal';
+import DonutScanner from './DonutScanner';
 
 const AppStatistics = ({ onBack }: { onBack: () => void }) => {
   const [isScanModalOpen, setIsScanModalOpen] = useState(false);
-  const { isDarkMode, setIsDarkMode } = useApp();
+  const { isDarkMode, setIsDarkMode, pageScanStates, startPageScan } = useApp();
+
+  const pageId = 'app-statistics';
+  const scanState = pageScanStates[pageId];
+
+  useEffect(() => {
+    // Auto-start scan when page loads
+    if (!scanState?.isComplete) {
+      startPageScan(pageId);
+    }
+  }, []);
+
+  // Show scanning animation if scanning or not complete
+  if (scanState?.isScanning || (!scanState?.isComplete && !scanState)) {
+    return (
+      <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'} relative overflow-hidden`}>
+        {/* Header */}
+        <header className={`relative z-10 ${isDarkMode ? 'bg-slate-800/30' : 'bg-white/30'} backdrop-blur-sm border-b border-white/40`}>
+          <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <button onClick={onBack} className={`p-2 ${isDarkMode ? 'text-slate-300 hover:text-slate-100' : 'text-slate-600 hover:text-slate-800'} transition-colors`}>
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h1 className={`text-xl font-bold ${isDarkMode ? 'text-slate-200' : 'text-slate-700'}`}>App Statistics</h1>
+            </div>
+            
+            <button 
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className={`p-3 ${isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-white/50 text-slate-600 hover:bg-white/70'} backdrop-blur-sm rounded-2xl transition-all`}
+            >
+              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+          </div>
+        </header>
+
+        <main className="relative z-10 max-w-4xl mx-auto px-6 py-8 flex items-center justify-center">
+          <DonutScanner pageId={pageId} size={250} />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'} relative overflow-hidden`}>
@@ -30,7 +71,6 @@ const AppStatistics = ({ onBack }: { onBack: () => void }) => {
             </div>
           </div>
           
-          {/* Theme Toggle Button */}
           <button 
             onClick={() => setIsDarkMode(!isDarkMode)}
             className={`p-3 ${isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-white/50 text-slate-600 hover:bg-white/70'} backdrop-blur-sm rounded-2xl transition-all`}
@@ -88,7 +128,7 @@ const AppStatistics = ({ onBack }: { onBack: () => void }) => {
         {/* Last Scan Info */}
         <div className={`${isDarkMode ? 'bg-slate-800/40' : 'bg-white/40'} backdrop-blur-sm border border-white/50 rounded-2xl p-4 text-center mb-8 shadow-lg`}>
           <p className={`${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-            <span className={`font-medium ${isDarkMode ? 'text-slate-200' : 'text-slate-700'}`}>Last Scan:</span> Never
+            <span className={`font-medium ${isDarkMode ? 'text-slate-200' : 'text-slate-700'}`}>Last Scan:</span> Just completed
           </p>
         </div>
 
