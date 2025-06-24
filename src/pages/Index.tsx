@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Shield, Settings, Eye, Search, BarChart3, Scan, Menu, Bell, User, Lock, Moon, Sun } from 'lucide-react';
 import { useApp } from '@/contexts/AppContext';
@@ -8,20 +7,49 @@ import ThreatAnalyzer from '../components/ThreatAnalyzer';
 import AppStatistics from '../components/AppStatistics';
 import AdwareScanner from '../components/AdwareScanner';
 import DataBreachMonitor from '../components/DataBreachMonitor';
-
-const modules = [
-  { id: 'security', title: 'Security Advisor', icon: Shield, color: 'from-blue-300 to-blue-400', bgColor: 'bg-blue-100' },
-  { id: 'hidden', title: 'Hidden Applications', icon: Eye, color: 'from-purple-300 to-purple-400', bgColor: 'bg-purple-100' },
-  { id: 'threat', title: 'Threat Analyzer', icon: Search, color: 'from-rose-300 to-rose-400', bgColor: 'bg-rose-100' },
-  { id: 'stats', title: 'App Statistics', icon: BarChart3, color: 'from-emerald-300 to-emerald-400', bgColor: 'bg-emerald-100' },
-  { id: 'adware', title: 'Adware Scan', icon: Scan, color: 'from-orange-300 to-orange-400', bgColor: 'bg-orange-100' },
-  { id: 'breach', title: 'Data Breach Monitor', icon: Bell, color: 'from-cyan-300 to-cyan-400', bgColor: 'bg-cyan-100' },
-];
-
+const modules = [{
+  id: 'security',
+  title: 'Security Advisor',
+  icon: Shield,
+  color: 'from-blue-300 to-blue-400',
+  bgColor: 'bg-blue-100'
+}, {
+  id: 'hidden',
+  title: 'Hidden Applications',
+  icon: Eye,
+  color: 'from-purple-300 to-purple-400',
+  bgColor: 'bg-purple-100'
+}, {
+  id: 'threat',
+  title: 'Threat Analyzer',
+  icon: Search,
+  color: 'from-rose-300 to-rose-400',
+  bgColor: 'bg-rose-100'
+}, {
+  id: 'stats',
+  title: 'App Statistics',
+  icon: BarChart3,
+  color: 'from-emerald-300 to-emerald-400',
+  bgColor: 'bg-emerald-100'
+}, {
+  id: 'adware',
+  title: 'Adware Scan',
+  icon: Scan,
+  color: 'from-orange-300 to-orange-400',
+  bgColor: 'bg-orange-100'
+}, {
+  id: 'breach',
+  title: 'Data Breach Monitor',
+  icon: Bell,
+  color: 'from-cyan-300 to-cyan-400',
+  bgColor: 'bg-cyan-100'
+}];
 const Index = () => {
   const [activeModule, setActiveModule] = useState<string | null>(null);
-  const { isDarkMode, setIsDarkMode } = useApp();
-
+  const {
+    isDarkMode,
+    setIsDarkMode
+  } = useApp();
   const renderActiveModule = () => {
     switch (activeModule) {
       case 'security':
@@ -40,13 +68,10 @@ const Index = () => {
         return null;
     }
   };
-
   if (activeModule) {
     return renderActiveModule();
   }
-
-  return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100'} relative overflow-hidden`}>
+  return <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100'} relative overflow-hidden`}>
       {/* Decorative Elements */}
       <div className={`absolute top-10 left-10 w-20 h-20 ${isDarkMode ? 'bg-yellow-200/20' : 'bg-yellow-200'} rounded-full opacity-40`}></div>
       <div className={`absolute top-32 right-16 w-16 h-16 ${isDarkMode ? 'bg-cyan-200/20' : 'bg-cyan-200'} rounded-full opacity-50`}></div>
@@ -78,10 +103,7 @@ const Index = () => {
               <User className="w-5 h-5" />
             </button>
             {/* Theme Toggle Button */}
-            <button 
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className={`p-3 ${isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-white/50 text-slate-600 hover:bg-white/70'} backdrop-blur-sm rounded-2xl transition-all`}
-            >
+            <button onClick={() => setIsDarkMode(!isDarkMode)} className={`p-3 ${isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-white/50 text-slate-600 hover:bg-white/70'} backdrop-blur-sm rounded-2xl transition-all`}>
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
           </div>
@@ -126,14 +148,9 @@ const Index = () => {
 
         {/* Modules Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-          {modules.map((module) => {
-            const IconComponent = module.icon;
-            return (
-              <button
-                key={module.id}
-                onClick={() => setActiveModule(module.id)}
-                className={`group ${isDarkMode ? 'bg-slate-800/40 hover:bg-slate-700/60' : 'bg-white/40 hover:bg-white/60'} backdrop-blur-sm rounded-3xl p-6 border border-white/50 transition-all duration-300 hover:scale-105 shadow-lg`}
-              >
+          {modules.map(module => {
+          const IconComponent = module.icon;
+          return <button key={module.id} onClick={() => setActiveModule(module.id)} className={`group ${isDarkMode ? 'bg-slate-800/40 hover:bg-slate-700/60' : 'bg-white/40 hover:bg-white/60'} backdrop-blur-sm rounded-3xl p-6 border border-white/50 transition-all duration-300 hover:scale-105 shadow-lg`}>
                 <div className={`w-16 h-16 bg-gradient-to-br ${module.color} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
                   <IconComponent className="w-8 h-8 text-white" />
                 </div>
@@ -141,9 +158,8 @@ const Index = () => {
                   {module.title}
                 </h3>
                 <div className={`w-8 h-1 ${isDarkMode ? 'bg-gradient-to-r from-slate-600 to-slate-500' : 'bg-gradient-to-r from-slate-300 to-slate-400'} rounded-full mx-auto`}></div>
-              </button>
-            );
-          })}
+              </button>;
+        })}
         </div>
 
         {/* Status Card */}
@@ -157,13 +173,9 @@ const Index = () => {
 
         {/* Quick Action Button */}
         <div className="mt-8">
-          <button className={`w-full ${isDarkMode ? 'bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-slate-200' : 'bg-gradient-to-r from-slate-300 to-slate-400 hover:from-slate-400 hover:to-slate-500 text-slate-700'} py-4 px-8 rounded-2xl font-bold text-lg transition-all transform hover:scale-105 shadow-xl`}>
-            Start Security Scan
-          </button>
+          
         </div>
       </main>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
