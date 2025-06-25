@@ -7,6 +7,7 @@ import ThreatAnalyzer from '../components/ThreatAnalyzer';
 import AppStatistics from '../components/AppStatistics';
 import AdwareScanner from '../components/AdwareScanner';
 import DataBreachMonitor from '../components/DataBreachMonitor';
+
 const modules = [{
   id: 'security',
   title: 'Security Advisor',
@@ -44,12 +45,14 @@ const modules = [{
   color: 'from-cyan-300 to-cyan-400',
   bgColor: 'bg-cyan-100'
 }];
+
 const Index = () => {
   const [activeModule, setActiveModule] = useState<string | null>(null);
   const {
     isDarkMode,
     setIsDarkMode
   } = useApp();
+
   const renderActiveModule = () => {
     switch (activeModule) {
       case 'security':
@@ -68,9 +71,11 @@ const Index = () => {
         return null;
     }
   };
+
   if (activeModule) {
     return renderActiveModule();
   }
+
   return <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100'} relative overflow-hidden`}>
       {/* Decorative Elements */}
       <div className={`absolute top-10 left-10 w-20 h-20 ${isDarkMode ? 'bg-yellow-200/20' : 'bg-yellow-200'} rounded-full opacity-40`}></div>
@@ -178,4 +183,5 @@ const Index = () => {
       </main>
     </div>;
 };
+
 export default Index;
